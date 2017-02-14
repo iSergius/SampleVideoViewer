@@ -1,0 +1,29 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:theme="@style/AppTheme"
+    tools:context="name.isergius.learn.android.task.hazpro.samplevideochat.ui.EnterActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="@dimen/default_border_padding"
+        android:paddingRight="@dimen/default_border_padding"
+        android:gravity="center_vertical">
+
+        <android.support.v7.widget.AppCompatEditText
+            android:id="@+id/room_name_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <android.support.v7.widget.AppCompatButton
+            android:id="@+id/open_room_btn"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/room_name_edit"
+            android:text="@string/open_room_btn"/>
+    </RelativeLayout>
+
+
+</RelativeLayout>
