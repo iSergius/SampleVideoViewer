@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:theme="@style/AppTheme"
-    tools:context="name.isergius.learn.android.task.hazpro.samplevideochat.ui.EnterActivity">
+    tools:context="name.isergius.android.task.hazpro.samplevideochat.ui.EnterActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -15,7 +15,9 @@
         <android.support.v7.widget.AppCompatEditText
             android:id="@+id/room_name_edit"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:textAlignment="center"/>
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/open_room_btn"
