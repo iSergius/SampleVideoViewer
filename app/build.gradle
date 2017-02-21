@@ -17,6 +17,9 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
 }
 
 dependencies {
@@ -35,4 +38,6 @@ dependencies {
     }
 
     testCompile 'junit:junit:4.12'
+    testCompile 'org.mockito:mockito-core:2.7.10'
+    testCompile 'org.json:json:20160810'
 }
