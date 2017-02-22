@@ -46,6 +46,17 @@ public class MemoryClientStore implements ClientStore {
     }
 
     @Override
+    public synchronized List<Client> readAllReadyClients() {
+        List<Client> result = new ArrayList<>();
+        for (Client client : clients.values()) {
+            if (client.isReady()) {
+                result.add(client);
+            }
+        }
+        return result;
+    }
+
+    @Override
     public synchronized void save(Client client) throws StoreException {
         try {
             clients.put(client.getId(), client);

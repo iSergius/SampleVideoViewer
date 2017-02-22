@@ -24,6 +24,8 @@ public interface ClientStore {
 
     List<Client> readAll();
 
+    List<Client> readAllReadyClients();
+
     void saveSelf(Client selfClient) throws StoreException;
 
     Client readSelf() throws StoreException;

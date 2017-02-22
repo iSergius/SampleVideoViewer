@@ -40,6 +40,13 @@ public class MemoryClientStoreTest {
     }
 
     @Test
+    public void readAllReadyClients() throws Exception {
+        List<Client> allClients = memoryClientStore.readAllReadyClients();
+        System.out.println(allClients);
+        Assert.assertTrue(allClients.isEmpty());
+    }
+
+    @Test
     public void save() throws Exception {
         String clientId = "dca3ba16-9853-4c5e-ad04-c553f816f4b9";
         Client expectedClient = new Client(clientId,
