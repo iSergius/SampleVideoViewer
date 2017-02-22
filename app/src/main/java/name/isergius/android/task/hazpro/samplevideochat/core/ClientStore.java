@@ -23,15 +23,7 @@ public interface ClientStore {
 
     List<Client> readAll();
 
-    void addCandidateServer(String clientId, CandidateServer candidateServer) throws StoreException;
-
-    void addIceServer(String clientId, Server server) throws StoreException;
-
     void saveSelf(Client selfClient) throws StoreException;
 
     Client readSelf() throws StoreException;
-
-    void addSDescription(String clientId, SDescription sDescription) throws StoreException;
-
-    void connected();
 }

@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 import name.isergius.android.task.hazpro.samplevideochat.data.CandidateServer;
 import name.isergius.android.task.hazpro.samplevideochat.data.Client;
@@ -58,18 +59,6 @@ public class MemoryClientStore implements ClientStore {
     }
 
     @Override
-    public synchronized void addCandidateServer(String clientId, CandidateServer candidateServer) throws StoreException {
-        read(clientId).add(candidateServer);
-    }
-
-    @Override
-    public synchronized void addIceServer(String clientId, Server server) throws StoreException {
-        Client client = clients.get(clientId);
-        isNonNull(client);
-        client.add(server);
-    }
-
-    @Override
     public synchronized void saveSelf(Client self) throws StoreException {
         isNonNull(self);
         this.self = self;
@@ -78,18 +67,6 @@ public class MemoryClientStore implements ClientStore {
     @Override
     public synchronized Client readSelf() throws StoreException {
         return self;
-    }
-
-    @Override
-    public synchronized void addSDescription(String clientId, SDescription sDescription) throws StoreException {
-        Client client = clients.get(clientId);
-        isNonNull(client);
-        client.setSDescription(sDescription);
-    }
-
-    @Override
-    public void connected() {
-
     }
 
     private void isNonNull(Client client) throws StoreException {
