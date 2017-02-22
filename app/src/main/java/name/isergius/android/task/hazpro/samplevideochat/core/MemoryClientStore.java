@@ -85,6 +85,11 @@ public class MemoryClientStore implements ClientStore {
 
     }
 
+    @Override
+    public void connected() {
+
+    }
+
     private void isNonNull(Client client) throws StoreException {
         if (client == null) throw new StoreException("Client is not found");
     }
