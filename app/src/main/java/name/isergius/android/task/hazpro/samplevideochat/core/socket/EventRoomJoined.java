@@ -6,12 +6,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.List;
-import java.util.Map;
-
 import io.socket.emitter.Emitter;
 import name.isergius.android.task.hazpro.samplevideochat.core.ClientStore;
-import name.isergius.android.task.hazpro.samplevideochat.core.StoreException;
+import name.isergius.android.task.hazpro.samplevideochat.core.MessageConsumer;
 import name.isergius.android.task.hazpro.samplevideochat.data.Client;
 import name.isergius.android.task.hazpro.samplevideochat.data.Server;
 
@@ -22,11 +19,11 @@ public class EventRoomJoined implements Emitter.Listener {
     public static final String EVENT_ID = "room_joined";
     private static final String TAG = EventRoomJoined.class.getSimpleName();
 
-    private ClientStore clientStore;
+    private MessageConsumer messageConsumer;
 
 
-    public EventRoomJoined(ClientStore clientStore) {
-        this.clientStore = clientStore;
+    public EventRoomJoined(MessageConsumer messageConsumer) {
+        this.messageConsumer = messageConsumer;
     }
 
     @Override
@@ -42,7 +39,7 @@ public class EventRoomJoined implements Emitter.Listener {
             for (int i = 0; i < clients.length(); i++) {
                 Client client = extractClient(clients.getJSONObject(i));
                 if (!client.getId().equals(selfId)) {
-                    clientStore.save(client);
+                    messageConsumer.clientData(client);
                 }
             }
             JSONArray iceServers = object
@@ -53,8 +50,8 @@ public class EventRoomJoined implements Emitter.Listener {
             for (int i = 0; i < iceServers.length(); i++) {
                 selfClient.add(extractServer(iceServers.getJSONObject(i)));
             }
-            clientStore.saveSelf(selfClient);
-        } catch (JSONException | StoreException e) {
+            messageConsumer.selfData(selfClient);
+        } catch (JSONException e) {
             Log.e(TAG, "Error", e);
         }
     }

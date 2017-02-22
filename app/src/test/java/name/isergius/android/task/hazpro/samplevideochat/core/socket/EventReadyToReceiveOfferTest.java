@@ -8,7 +8,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import name.isergius.android.task.hazpro.samplevideochat.core.ClientStore;
+import name.isergius.android.task.hazpro.samplevideochat.core.MessageConsumer;
 import name.isergius.android.task.hazpro.samplevideochat.data.Server;
 
 /**
@@ -18,7 +18,7 @@ import name.isergius.android.task.hazpro.samplevideochat.data.Server;
 @RunWith(MockitoJUnitRunner.class)
 public class EventReadyToReceiveOfferTest {
     @Mock
-    private ClientStore clientStore;
+    private MessageConsumer messageConsumer;
 
     private JSONObject arg;
 
@@ -28,14 +28,14 @@ public class EventReadyToReceiveOfferTest {
     @Before
     public void setUp() throws Exception {
         this.arg = new JSONObject(JSON);
-        this.eventReadyToReceiveOffer = new EventReadyToReceiveOffer(clientStore);
+        this.eventReadyToReceiveOffer = new EventReadyToReceiveOffer(messageConsumer);
     }
 
     @Test
     public void call() throws Exception {
         String clientId = "6236007a-6651-453b-8701-fe127541e048";
         eventReadyToReceiveOffer.call(arg);
-        Mockito.verify(clientStore).addIceServer(clientId, new Server("j/1YtwTvE6yqlb4l/sbYWW1oA64=", "appearin:1487381191", "turn:turn.appear.in:443?transport=udp"));
+        Mockito.verify(messageConsumer).clientIceServer(clientId, new Server("j/1YtwTvE6yqlb4l/sbYWW1oA64=", "appearin:1487381191", "turn:turn.appear.in:443?transport=udp"));
     }
 
 }

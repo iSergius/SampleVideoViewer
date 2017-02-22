@@ -9,7 +9,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import name.isergius.android.task.hazpro.samplevideochat.core.ClientStore;
+import name.isergius.android.task.hazpro.samplevideochat.core.MessageConsumer;
 import name.isergius.android.task.hazpro.samplevideochat.data.Client;
 import name.isergius.android.task.hazpro.samplevideochat.data.Server;
 
@@ -21,7 +21,7 @@ import name.isergius.android.task.hazpro.samplevideochat.data.Server;
 public class EventRoomJoinedTest {
 
     @Mock
-    private ClientStore clientStore;
+    private MessageConsumer messageConsumer;
 
     private EventRoomJoined eventRoomJoined;
 
@@ -31,7 +31,7 @@ public class EventRoomJoinedTest {
     @Before
     public void setUp() throws Exception {
         arg = new JSONObject(JSON);
-        eventRoomJoined = new EventRoomJoined(clientStore);
+        eventRoomJoined = new EventRoomJoined(messageConsumer);
     }
 
 
@@ -42,8 +42,8 @@ public class EventRoomJoinedTest {
         expectedClient.add(new Server("Cbi9jjvM/pWOcOsfeGxLOeQbcOU=","appearin:1487733517","turn:turn.appear.in:443?transport=tcp"));
         expectedClient.add(new Server("Cbi9jjvM/pWOcOsfeGxLOeQbcOU=","appearin:1487733517","turns:turn.appear.in:443?transport=tcp"));
         eventRoomJoined.call(arg);
-        Mockito.verify(clientStore).saveSelf(expectedClient);
-        Mockito.verify(clientStore).save(ArgumentMatchers.any(Client.class));
+        Mockito.verify(messageConsumer).selfData(expectedClient);
+        Mockito.verify(messageConsumer).clientData(ArgumentMatchers.any(Client.class));
     }
 
 }

@@ -5,13 +5,9 @@ import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Map;
-
 import io.socket.emitter.Emitter;
-import name.isergius.android.task.hazpro.samplevideochat.core.ClientStore;
-import name.isergius.android.task.hazpro.samplevideochat.core.StoreException;
+import name.isergius.android.task.hazpro.samplevideochat.core.MessageConsumer;
 import name.isergius.android.task.hazpro.samplevideochat.data.CandidateServer;
-import name.isergius.android.task.hazpro.samplevideochat.data.Client;
 
 /**
  * @author Sergey Kondratyev
@@ -23,10 +19,10 @@ public class EventIceCandidate implements Emitter.Listener {
 
     private static final String TAG = EventIceCandidate.class.getSimpleName();
 
-    private ClientStore clientStore;
+    private MessageConsumer messageConsumer;
 
-    public EventIceCandidate(ClientStore clientStore) {
-        this.clientStore = clientStore;
+    public EventIceCandidate(MessageConsumer messageConsumer) {
+        this.messageConsumer = messageConsumer;
     }
 
     @Override
@@ -41,8 +37,8 @@ public class EventIceCandidate implements Emitter.Listener {
                     message.getString("sdpMid"),
                     message.getInt("sdpMLineIndex"),
                     message.getString("candidate"));
-            clientStore.addCandidateServer(clientId,candidateServer);
-        } catch (JSONException | StoreException e) {
+            messageConsumer.clientIceCandidateServer(clientId,candidateServer);
+        } catch (JSONException e) {
             Log.e(TAG, "Error", e);
         }
     }

@@ -5,11 +5,9 @@ import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Map;
-
 import io.socket.emitter.Emitter;
 import name.isergius.android.task.hazpro.samplevideochat.core.ClientStore;
-import name.isergius.android.task.hazpro.samplevideochat.core.StoreException;
+import name.isergius.android.task.hazpro.samplevideochat.core.MessageConsumer;
 import name.isergius.android.task.hazpro.samplevideochat.data.Client;
 
 /**
@@ -20,10 +18,10 @@ public class EventNewClient implements Emitter.Listener {
     public static final String EVENT_ID = "new_client";
     private static final String TAG = EventNewClient.class.getSimpleName();
 
-    private final ClientStore clientStore;
+    private final MessageConsumer messageConsumer;
 
-    public EventNewClient(ClientStore clientStore) {
-        this.clientStore = clientStore;
+    public EventNewClient(MessageConsumer messageConsumer) {
+        this.messageConsumer = messageConsumer;
     }
 
     @Override
@@ -37,9 +35,8 @@ public class EventNewClient implements Emitter.Listener {
             String deviceId = client.getString("deviceId");
             Object userId = client.get("userId");
             String name = client.getString("name");
-            Client result = new Client(id, deviceId, userId.toString(), name);
-            clientStore.save(result);
-        } catch (JSONException | StoreException e) {
+            messageConsumer.clientData(new Client(id, deviceId, userId.toString(), name));
+        } catch (JSONException  e) {
             Log.e(TAG, "Error", e);
         }
     }

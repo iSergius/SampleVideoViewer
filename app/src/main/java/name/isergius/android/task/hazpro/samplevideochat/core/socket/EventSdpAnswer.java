@@ -5,11 +5,8 @@ import android.util.Log;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.Map;
-
 import io.socket.emitter.Emitter;
-import name.isergius.android.task.hazpro.samplevideochat.core.ClientStore;
-import name.isergius.android.task.hazpro.samplevideochat.data.Client;
+import name.isergius.android.task.hazpro.samplevideochat.core.MessageConsumer;
 import name.isergius.android.task.hazpro.samplevideochat.data.SDescription;
 
 /**
@@ -19,10 +16,10 @@ public class EventSdpAnswer implements Emitter.Listener {
     public static final String EVENT_ID = "sdp_answer";
     private static final String TAG = EventSdpAnswer.class.getSimpleName();
 
-    private ClientStore clientStore;
+    private MessageConsumer messageConsumer;
 
-    public EventSdpAnswer(ClientStore clientStore) {
-        this.clientStore = clientStore;
+    public EventSdpAnswer(MessageConsumer messageConsumer) {
+        this.messageConsumer = messageConsumer;
     }
 
     @Override
@@ -35,7 +32,7 @@ public class EventSdpAnswer implements Emitter.Listener {
             JSONObject message = object.getJSONObject("message");
             SDescription sDescription = new SDescription(message.getString("type"), message.getString("sdp"));
 
-            clientStore.addSDescription(clientId,sDescription);
+            messageConsumer.clientSDescription(clientId,sDescription);
         } catch (JSONException e) {
             Log.e(TAG, "Error", e);
         }

@@ -7,8 +7,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import io.socket.emitter.Emitter;
-import name.isergius.android.task.hazpro.samplevideochat.core.ClientStore;
-import name.isergius.android.task.hazpro.samplevideochat.core.StoreException;
+import name.isergius.android.task.hazpro.samplevideochat.core.MessageConsumer;
 import name.isergius.android.task.hazpro.samplevideochat.data.Server;
 
 /**
@@ -19,10 +18,10 @@ public class EventReadyToReceiveOffer implements Emitter.Listener {
     public static final String EVENT_ALIAS0 = "client_ready";
     private static final String TAG = EventReadyToReceiveOffer.class.getSimpleName();
 
-    private ClientStore clientStore;
+    private MessageConsumer messageConsumer;
 
-    public EventReadyToReceiveOffer(ClientStore clientStore) {
-        this.clientStore = clientStore;
+    public EventReadyToReceiveOffer(MessageConsumer messageConsumer) {
+        this.messageConsumer = messageConsumer;
     }
 
     @Override
@@ -36,9 +35,9 @@ public class EventReadyToReceiveOffer implements Emitter.Listener {
                     .getJSONObject("iceServers")
                     .getJSONArray("iceServers");
             for (int i = 0; i < iceServers.length(); i++) {
-                clientStore.addIceServer(clientId, convertToServer(iceServers.getJSONObject(i)));
+                messageConsumer.clientIceServer(clientId, convertToServer(iceServers.getJSONObject(i)));
             }
-        } catch (JSONException | StoreException e) {
+        } catch (JSONException e) {
             Log.e(TAG, "Error", e);
         }
     }

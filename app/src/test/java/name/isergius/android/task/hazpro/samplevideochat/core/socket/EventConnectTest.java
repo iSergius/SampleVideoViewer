@@ -7,7 +7,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import name.isergius.android.task.hazpro.samplevideochat.core.ClientStore;
+import name.isergius.android.task.hazpro.samplevideochat.core.MessageConsumer;
 
 /**
  * @author Sergey Kondratyev
@@ -17,19 +17,19 @@ import name.isergius.android.task.hazpro.samplevideochat.core.ClientStore;
 public class EventConnectTest {
 
     @Mock
-    private ClientStore clientStore;
+    private MessageConsumer messageConsumer;
 
     private EventConnect eventConnect;
 
     @Before
     public void setUp() throws Exception {
-        this.eventConnect = new EventConnect(clientStore);
+        this.eventConnect = new EventConnect(messageConsumer);
     }
 
     @Test
     public void call() throws Exception {
         eventConnect.call(null);
-        Mockito.verify(clientStore).connected();
+        Mockito.verify(messageConsumer).selfConnected();
     }
 
 }

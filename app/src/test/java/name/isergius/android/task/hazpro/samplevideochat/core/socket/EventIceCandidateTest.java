@@ -8,7 +8,7 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import name.isergius.android.task.hazpro.samplevideochat.core.ClientStore;
+import name.isergius.android.task.hazpro.samplevideochat.core.MessageConsumer;
 import name.isergius.android.task.hazpro.samplevideochat.data.CandidateServer;
 
 /**
@@ -19,7 +19,7 @@ import name.isergius.android.task.hazpro.samplevideochat.data.CandidateServer;
 public class EventIceCandidateTest {
 
     @Mock
-    private ClientStore clientStore;
+    private MessageConsumer messageConsumer;
 
     private EventIceCandidate eventIceCandidate;
 
@@ -29,7 +29,7 @@ public class EventIceCandidateTest {
     @Before
     public void setUp() throws Exception {
         arg = new JSONObject(JSON);
-        eventIceCandidate = new EventIceCandidate(clientStore);
+        eventIceCandidate = new EventIceCandidate(messageConsumer);
     }
 
     @Test
@@ -37,7 +37,7 @@ public class EventIceCandidateTest {
         String expectedClientId = "6236007a-6651-453b-8701-fe127541e048";
         CandidateServer expectedCandidateServer = new CandidateServer("audio", 0, "candidate:316526476 1 udp 2122260223 192.168.0.20 37695 typ host generation 0");
         eventIceCandidate.call(arg);
-        Mockito.verify(clientStore).addCandidateServer(expectedClientId, expectedCandidateServer);
+        Mockito.verify(messageConsumer).clientIceCandidateServer(expectedClientId, expectedCandidateServer);
     }
 
 }
