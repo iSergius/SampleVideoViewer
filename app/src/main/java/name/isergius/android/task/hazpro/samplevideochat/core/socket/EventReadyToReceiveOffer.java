@@ -35,7 +35,7 @@ public class EventReadyToReceiveOffer implements Emitter.Listener {
                     .getJSONObject("iceServers")
                     .getJSONArray("iceServers");
             for (int i = 0; i < iceServers.length(); i++) {
-                messageConsumer.clientIceServer(clientId, convertToServer(iceServers.getJSONObject(i)));
+                messageConsumer.clientServer(clientId, convertToServer(iceServers.getJSONObject(i)));
             }
         } catch (JSONException e) {
             Log.e(TAG, "Error", e);

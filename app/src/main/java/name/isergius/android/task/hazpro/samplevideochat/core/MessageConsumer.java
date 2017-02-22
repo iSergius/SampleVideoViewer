@@ -15,9 +15,9 @@ public interface MessageConsumer {
 
     void clientLogout(String clientId);
 
-    void clientIceCandidateServer(String clientId, CandidateServer candidateServer);
+    void clientCandidateServer(String clientId, CandidateServer candidateServer);
 
-    void clientIceServer(String clientId, Server server);
+    void clientServer(String clientId, Server server);
 
     void clientSDescription(String clientId, SDescription sDescription);
 

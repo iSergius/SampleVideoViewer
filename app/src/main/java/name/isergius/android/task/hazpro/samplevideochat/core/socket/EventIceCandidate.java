@@ -37,7 +37,7 @@ public class EventIceCandidate implements Emitter.Listener {
                     message.getString("sdpMid"),
                     message.getInt("sdpMLineIndex"),
                     message.getString("candidate"));
-            messageConsumer.clientIceCandidateServer(clientId,candidateServer);
+            messageConsumer.clientCandidateServer(clientId,candidateServer);
         } catch (JSONException e) {
             Log.e(TAG, "Error", e);
         }

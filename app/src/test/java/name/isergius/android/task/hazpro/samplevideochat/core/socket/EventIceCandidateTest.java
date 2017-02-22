@@ -37,7 +37,7 @@ public class EventIceCandidateTest {
         String expectedClientId = "6236007a-6651-453b-8701-fe127541e048";
         CandidateServer expectedCandidateServer = new CandidateServer("audio", 0, "candidate:316526476 1 udp 2122260223 192.168.0.20 37695 typ host generation 0");
         eventIceCandidate.call(arg);
-        Mockito.verify(messageConsumer).clientIceCandidateServer(expectedClientId, expectedCandidateServer);
+        Mockito.verify(messageConsumer).clientCandidateServer(expectedClientId, expectedCandidateServer);
     }
 
 }

@@ -24,6 +24,7 @@ public class Client implements Serializable {
     private String name;
     private List<Server> servers = new LinkedList<>();
     private List<CandidateServer> candidateServers = new LinkedList<>();
+    private boolean ready;
 
     private String socketId;
     private boolean isVideoEnabled;
@@ -63,6 +64,7 @@ public class Client implements Serializable {
 
     public void add(Server server) {
         this.servers.add(server);
+        this.ready = true;
     }
 
     public void add(CandidateServer candidateServer) {
@@ -139,6 +141,14 @@ public class Client implements Serializable {
 
     public void setLocalDescription(SDescription localDescription) {
         this.localDescription = localDescription;
+    }
+
+    public boolean isReady() {
+        return ready;
+    }
+
+    public void setReady(boolean ready) {
+        this.ready = ready;
     }
 
     @Override

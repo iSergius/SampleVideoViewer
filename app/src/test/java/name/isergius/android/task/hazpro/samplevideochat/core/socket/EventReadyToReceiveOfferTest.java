@@ -35,7 +35,7 @@ public class EventReadyToReceiveOfferTest {
     public void call() throws Exception {
         String clientId = "6236007a-6651-453b-8701-fe127541e048";
         eventReadyToReceiveOffer.call(arg);
-        Mockito.verify(messageConsumer).clientIceServer(clientId, new Server("j/1YtwTvE6yqlb4l/sbYWW1oA64=", "appearin:1487381191", "turn:turn.appear.in:443?transport=udp"));
+        Mockito.verify(messageConsumer).clientServer(clientId, new Server("j/1YtwTvE6yqlb4l/sbYWW1oA64=", "appearin:1487381191", "turn:turn.appear.in:443?transport=udp"));
     }
 
 }
