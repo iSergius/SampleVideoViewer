@@ -25,4 +25,8 @@ public interface ClientStore {
     void addCandidateServer(String clientId, CandidateServer candidateServer) throws StoreException;
 
     void addIceServer(String clientId, Server server) throws StoreException;
+
+    void saveSelf(Client selfClient) throws StoreException;
+
+    Client readSelf() throws StoreException;
 }

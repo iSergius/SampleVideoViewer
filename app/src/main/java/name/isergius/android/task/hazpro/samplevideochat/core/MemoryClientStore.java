@@ -18,6 +18,7 @@ import name.isergius.android.task.hazpro.samplevideochat.data.Server;
 public class MemoryClientStore implements ClientStore {
 
     private Map<String, Client> clients = new HashMap<>();
+    private Client self;
 
     MemoryClientStore() {
     }
@@ -65,6 +66,17 @@ public class MemoryClientStore implements ClientStore {
         Client client = clients.get(clientId);
         isNonNull(client);
         client.add(server);
+    }
+
+    @Override
+    public synchronized void saveSelf(Client self) throws StoreException {
+        isNonNull(self);
+        this.self = self;
+    }
+
+    @Override
+    public synchronized Client readSelf() throws StoreException {
+        return self;
     }
 
     private void isNonNull(Client client) throws StoreException {

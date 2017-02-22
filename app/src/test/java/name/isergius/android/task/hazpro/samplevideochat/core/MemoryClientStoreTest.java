@@ -75,4 +75,12 @@ public class MemoryClientStoreTest {
         Client client = memoryClientStore.read(clientId);
         Assert.assertEquals(Arrays.asList(expectedServer),client.getServers());
     }
+
+    @Test
+    public void saveSelf() throws Exception {
+        Client expectedClient = new Client("82c7cd22-6b7d-4866-ab7d-4a1aa2c85403", null, null, null);
+        memoryClientStore.saveSelf(expectedClient);
+        Client actualClient = memoryClientStore.readSelf();
+        Assert.assertEquals(expectedClient,actualClient);
+    }
 }
