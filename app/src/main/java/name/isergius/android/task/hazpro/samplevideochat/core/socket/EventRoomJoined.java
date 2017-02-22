@@ -40,7 +40,7 @@ public class EventRoomJoined implements Emitter.Listener {
                     .getJSONObject("room")
                     .getJSONArray("clients");
             for (int i = 0; i < clients.length(); i++) {
-                Client client = Util.extractClient(clients.getJSONObject(i));
+                Client client = extractClient(clients.getJSONObject(i));
                 if (!client.getId().equals(selfId)) {
                     clientStore.save(client);
                 }
@@ -59,10 +59,18 @@ public class EventRoomJoined implements Emitter.Listener {
         }
     }
 
-    Server extractServer(JSONObject server) throws JSONException {
+    private Server extractServer(JSONObject server) throws JSONException {
         String credential = server.getString("credential");
         String username = server.getString("username");
         String url = server.getString("url");
         return new Server(credential, username, url);
+    }
+
+    private Client extractClient(JSONObject client) throws JSONException {
+        String id = client.getString("id");
+        String deviceId = client.getString("deviceId");
+        Object userId = client.get("userId");
+        String name = client.getString("name");
+        return new Client(id, deviceId, userId.toString(), name);
     }
 }
