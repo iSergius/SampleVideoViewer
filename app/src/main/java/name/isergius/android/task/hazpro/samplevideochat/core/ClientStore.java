@@ -4,6 +4,7 @@ import java.util.List;
 
 import name.isergius.android.task.hazpro.samplevideochat.data.CandidateServer;
 import name.isergius.android.task.hazpro.samplevideochat.data.Client;
+import name.isergius.android.task.hazpro.samplevideochat.data.RoomConfig;
 import name.isergius.android.task.hazpro.samplevideochat.data.SDescription;
 import name.isergius.android.task.hazpro.samplevideochat.data.Server;
 
@@ -26,4 +27,8 @@ public interface ClientStore {
     void saveSelf(Client selfClient) throws StoreException;
 
     Client readSelf() throws StoreException;
+
+    RoomConfig readRoomConfig() throws StoreException;
+
+    void saveRoomConfig(RoomConfig roomConfig) throws StoreException;
 }

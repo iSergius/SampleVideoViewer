@@ -8,6 +8,7 @@ import java.util.Set;
 
 import name.isergius.android.task.hazpro.samplevideochat.data.CandidateServer;
 import name.isergius.android.task.hazpro.samplevideochat.data.Client;
+import name.isergius.android.task.hazpro.samplevideochat.data.RoomConfig;
 import name.isergius.android.task.hazpro.samplevideochat.data.SDescription;
 import name.isergius.android.task.hazpro.samplevideochat.data.Server;
 
@@ -21,6 +22,7 @@ public class MemoryClientStore implements ClientStore {
 
     private Map<String, Client> clients = new HashMap<>();
     private Client self;
+    private RoomConfig roomConfig;
 
     MemoryClientStore() {
     }
@@ -67,6 +69,17 @@ public class MemoryClientStore implements ClientStore {
     @Override
     public synchronized Client readSelf() throws StoreException {
         return self;
+    }
+
+    @Override
+    public synchronized RoomConfig readRoomConfig() throws StoreException {
+        if (this.roomConfig == null) throw new StoreException("RoomConfig is not initialized");
+        return roomConfig;
+    }
+
+    @Override
+    public synchronized void saveRoomConfig(RoomConfig roomConfig) throws StoreException {
+        this.roomConfig = roomConfig;
     }
 
     private void isNonNull(Client client) throws StoreException {

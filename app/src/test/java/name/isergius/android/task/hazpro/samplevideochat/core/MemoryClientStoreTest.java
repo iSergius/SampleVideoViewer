@@ -6,11 +6,8 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;
 
-import name.isergius.android.task.hazpro.samplevideochat.data.CandidateServer;
 import name.isergius.android.task.hazpro.samplevideochat.data.Client;
-import name.isergius.android.task.hazpro.samplevideochat.data.Credentials;
-import name.isergius.android.task.hazpro.samplevideochat.data.SDescription;
-import name.isergius.android.task.hazpro.samplevideochat.data.Server;
+import name.isergius.android.task.hazpro.samplevideochat.data.RoomConfig;
 
 /**
  * @author Sergey Kondratyev
@@ -22,7 +19,7 @@ public class MemoryClientStoreTest {
     private String expectedUserId = null;
     private String expectedName = "Anonymous 6236007a-6651-453b-8701-fe127541e048";
     private Client expectedClient = new Client(expectedClientId, expectedDeviceId, expectedUserId, expectedName);
-    private MemoryClientStore memoryClientStore =new MemoryClientStore(Arrays.asList(expectedClient));
+    private MemoryClientStore memoryClientStore = new MemoryClientStore(Arrays.asList(expectedClient));
 
     @Test
     public void read() throws Exception {
@@ -39,7 +36,7 @@ public class MemoryClientStoreTest {
     @Test
     public void readAll() throws Exception {
         List<Client> allClients = memoryClientStore.readAll();
-        Assert.assertEquals(Arrays.asList(expectedClient),allClients);
+        Assert.assertEquals(Arrays.asList(expectedClient), allClients);
     }
 
     @Test
@@ -51,7 +48,7 @@ public class MemoryClientStoreTest {
                 "Anonymous dca3ba16-9853-4c5e-ad04-c553f816f4b9");
         memoryClientStore.save(expectedClient);
         Client actualClient = memoryClientStore.read(clientId);
-        Assert.assertEquals(expectedClient,actualClient);
+        Assert.assertEquals(expectedClient, actualClient);
     }
 
     @Test
@@ -65,6 +62,14 @@ public class MemoryClientStoreTest {
         Client expectedClient = new Client("82c7cd22-6b7d-4866-ab7d-4a1aa2c85403", null, null, null);
         memoryClientStore.saveSelf(expectedClient);
         Client actualClient = memoryClientStore.readSelf();
-        Assert.assertEquals(expectedClient,actualClient);
+        Assert.assertEquals(expectedClient, actualClient);
+    }
+
+    @Test
+    public void saveRoomConfig() throws Exception {
+        RoomConfig expectedRoomConfig = new RoomConfig("t", true, true);
+        memoryClientStore.saveRoomConfig(expectedRoomConfig);
+        RoomConfig actualRoomConfig = memoryClientStore.readRoomConfig();
+        Assert.assertEquals(expectedRoomConfig, actualRoomConfig);
     }
 }
