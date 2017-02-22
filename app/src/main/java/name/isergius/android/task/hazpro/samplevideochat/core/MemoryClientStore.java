@@ -62,7 +62,7 @@ public class MemoryClientStore implements ClientStore {
     }
 
     @Override
-    public void addIceServer(String clientId, Server server) throws StoreException {
+    public synchronized void addIceServer(String clientId, Server server) throws StoreException {
         Client client = clients.get(clientId);
         isNonNull(client);
         client.add(server);
