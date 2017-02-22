@@ -7,6 +7,7 @@ import java.util.Map;
 
 import name.isergius.android.task.hazpro.samplevideochat.data.CandidateServer;
 import name.isergius.android.task.hazpro.samplevideochat.data.Client;
+import name.isergius.android.task.hazpro.samplevideochat.data.SDescription;
 import name.isergius.android.task.hazpro.samplevideochat.data.Server;
 
 /**
@@ -77,6 +78,11 @@ public class MemoryClientStore implements ClientStore {
     @Override
     public synchronized Client readSelf() throws StoreException {
         return self;
+    }
+
+    @Override
+    public void addSDescription(String clientId, SDescription sDescription) {
+
     }
 
     private void isNonNull(Client client) throws StoreException {

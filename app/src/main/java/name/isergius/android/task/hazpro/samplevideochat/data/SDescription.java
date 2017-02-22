@@ -22,4 +22,31 @@ public class SDescription implements Serializable {
     public SessionDescription toSessionDescription() {
         return new SessionDescription(SessionDescription.Type.fromCanonicalForm(type),description);
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        SDescription that = (SDescription) o;
+
+        if (type != null ? !type.equals(that.type) : that.type != null) return false;
+        return description != null ? description.equals(that.description) : that.description == null;
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = type != null ? type.hashCode() : 0;
+        result = 31 * result + (description != null ? description.hashCode() : 0);
+        return result;
+    }
+
+    @Override
+    public String toString() {
+        return "SDescription{" +
+                "type='" + type + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }
