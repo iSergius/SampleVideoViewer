@@ -7,6 +7,7 @@ import java.util.Map;
 
 import name.isergius.android.task.hazpro.samplevideochat.data.CandidateServer;
 import name.isergius.android.task.hazpro.samplevideochat.data.Client;
+import name.isergius.android.task.hazpro.samplevideochat.data.Server;
 
 /**
  * @author Sergey Kondratyev
@@ -57,6 +58,13 @@ public class MemoryClientStore implements ClientStore {
     @Override
     public synchronized void addCandidateServer(String clientId, CandidateServer candidateServer) throws StoreException {
         read(clientId).add(candidateServer);
+    }
+
+    @Override
+    public void addIceServer(String clientId, Server server) throws StoreException {
+        Client client = clients.get(clientId);
+        isNonNull(client);
+        client.add(server);
     }
 
     private void isNonNull(Client client) throws StoreException {

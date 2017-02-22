@@ -1,8 +1,6 @@
 package name.isergius.android.task.hazpro.samplevideochat.core;
 
-import org.junit.After;
 import org.junit.Assert;
-import org.junit.Before;
 import org.junit.Test;
 
 import java.util.Arrays;
@@ -10,6 +8,8 @@ import java.util.List;
 
 import name.isergius.android.task.hazpro.samplevideochat.data.CandidateServer;
 import name.isergius.android.task.hazpro.samplevideochat.data.Client;
+import name.isergius.android.task.hazpro.samplevideochat.data.Credentials;
+import name.isergius.android.task.hazpro.samplevideochat.data.Server;
 
 /**
  * @author Sergey Kondratyev
@@ -67,4 +67,12 @@ public class MemoryClientStoreTest {
         Assert.assertEquals(Arrays.asList(expectedCandidateServer), client.getCandidateServers());
     }
 
+    @Test
+    public void addIceServer() throws Exception {
+        String clientId = "6236007a-6651-453b-8701-fe127541e048";
+        Server expectedServer = new Server("j/1YtwTvE6yqlb4l/sbYWW1oA64=", "appearin:1487381191", "turn:turn.appear.in:443?transport=udp");
+        memoryClientStore.addIceServer(clientId, expectedServer);
+        Client client = memoryClientStore.read(clientId);
+        Assert.assertEquals(Arrays.asList(expectedServer),client.getServers());
+    }
 }

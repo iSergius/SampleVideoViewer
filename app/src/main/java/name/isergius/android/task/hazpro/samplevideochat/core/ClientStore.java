@@ -4,6 +4,7 @@ import java.util.List;
 
 import name.isergius.android.task.hazpro.samplevideochat.data.CandidateServer;
 import name.isergius.android.task.hazpro.samplevideochat.data.Client;
+import name.isergius.android.task.hazpro.samplevideochat.data.Server;
 
 /**
  * @author Sergey Kondratyev
@@ -22,4 +23,6 @@ public interface ClientStore {
     List<Client> readAll();
 
     void addCandidateServer(String clientId, CandidateServer candidateServer) throws StoreException;
+
+    void addIceServer(String clientId, Server server) throws StoreException;
 }
