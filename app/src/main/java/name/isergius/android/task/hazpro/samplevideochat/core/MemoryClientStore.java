@@ -81,8 +81,10 @@ public class MemoryClientStore implements ClientStore {
     }
 
     @Override
-    public void addSDescription(String clientId, SDescription sDescription) {
-
+    public synchronized void addSDescription(String clientId, SDescription sDescription) throws StoreException {
+        Client client = clients.get(clientId);
+        isNonNull(client);
+        client.setSDescription(sDescription);
     }
 
     @Override

@@ -31,7 +31,7 @@ public interface ClientStore {
 
     Client readSelf() throws StoreException;
 
-    void addSDescription(String clientId, SDescription sDescription);
+    void addSDescription(String clientId, SDescription sDescription) throws StoreException;
 
     void connected();
 }
