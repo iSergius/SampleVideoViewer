@@ -3,13 +3,14 @@ package name.isergius.android.task.hazpro.samplevideochat.core;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentMatchers;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import name.isergius.android.task.hazpro.samplevideochat.data.CandidateServer;
@@ -57,7 +58,7 @@ public class WsMessageDispatcherTest {
     public void clientLogout() throws Exception {
         wsMessageDispatcher.clientLogout(clientId);
         Mockito.verify(peerListener).disconnect();
-        Mockito.verify(storeListener).changeState();
+        Mockito.verify(storeListener).updateClients(ArgumentMatchers.any(List.class));
     }
 
     @Test
@@ -74,7 +75,7 @@ public class WsMessageDispatcherTest {
 
         wsMessageDispatcher.clientServer(clientId, expectedServer);
         Mockito.verify(clientStore).read(clientId);
-        Mockito.verify(storeListener).changeState();
+        Mockito.verify(storeListener).updateClients(ArgumentMatchers.any(List.class));
     }
 
     @Test

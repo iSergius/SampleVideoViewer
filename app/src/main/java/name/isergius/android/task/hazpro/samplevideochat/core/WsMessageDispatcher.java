@@ -4,7 +4,6 @@ import android.util.Log;
 
 import java.util.HashMap;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -20,11 +19,10 @@ import name.isergius.android.task.hazpro.samplevideochat.data.Server;
 public class WsMessageDispatcher implements MessageConsumer {
 
     private static final String TAG = WsMessageDispatcher.class.getSimpleName();
-
-    private Map<String, PeerListener> peerListeners = new HashMap<>();
-    private Set<StoreListener> storeListeners = new HashSet<>();
     private final ClientStore clientStore;
     private final MessageProducer messageProducer;
+    private Map<String, PeerListener> peerListeners = new HashMap<>();
+    private Set<StoreListener> storeListeners = new HashSet<>();
 
     public WsMessageDispatcher(ClientStore clientStore, MessageProducer messageProducer) {
         this.clientStore = clientStore;
@@ -32,18 +30,22 @@ public class WsMessageDispatcher implements MessageConsumer {
     }
 
     public void registerPeerListener(PeerListener peerListener) {
-        peerListeners.put(peerListener.clientId(),peerListener);
+        Log.v(TAG,"registerPeerListener "+peerListener);
+        peerListeners.put(peerListener.clientId(), peerListener);
     }
 
     public void unregisteredPeerListener(PeerListener peerListener) {
+        Log.v(TAG,"unregisteredPeerListener "+peerListener);
         peerListeners.remove(peerListener.clientId());
     }
 
     public void registerStoreListener(StoreListener storeListener) {
+        Log.v(TAG,"registerStoreListener "+storeListener);
         storeListeners.add(storeListener);
     }
 
     public void unregisteredStoreListener(StoreListener storeListener) {
+        Log.v(TAG,"unregisteredStoreListener "+storeListener);
         storeListeners.remove(storeListener);
     }
 
@@ -52,7 +54,7 @@ public class WsMessageDispatcher implements MessageConsumer {
         try {
             clientStore.save(client);
         } catch (StoreException e) {
-            Log.e(TAG,"Error",e);
+            Log.e(TAG, "Error", e);
         }
     }
 
@@ -66,7 +68,7 @@ public class WsMessageDispatcher implements MessageConsumer {
             }
             notifyStoreListeners();
         } catch (StoreException e) {
-            Log.e(TAG,"Error",e);
+            Log.e(TAG, "Error", e);
         }
     }
 
@@ -81,12 +83,12 @@ public class WsMessageDispatcher implements MessageConsumer {
         synchronized (clientStore) {
             try {
                 Client client = clientStore.read(clientId);
-                for (Server server: servers) {
+                for (Server server : servers) {
                     client.add(server);
                 }
                 notifyStoreListeners();
             } catch (StoreException e) {
-                Log.e(TAG,"Error",e);
+                Log.e(TAG, "Error", e);
             }
         }
     }
@@ -96,7 +98,7 @@ public class WsMessageDispatcher implements MessageConsumer {
         try {
             clientStore.saveSelf(client);
         } catch (StoreException e) {
-            Log.e(TAG,"Error",e);
+            Log.e(TAG, "Error", e);
         }
     }
 
@@ -111,13 +113,13 @@ public class WsMessageDispatcher implements MessageConsumer {
         try {
             messageProducer.sendJoinRoom(clientStore.readRoomConfig());
         } catch (StoreException e) {
-            Log.e(TAG,"Error",e);
+            Log.e(TAG, "Error", e);
         }
     }
 
     private void notifyStoreListeners() {
-        for (StoreListener listener: storeListeners) {
-            listener.changeState();
+        for (StoreListener listener : storeListeners) {
+            listener.updateClients(clientStore.readAllReadyClients());
         }
     }
 }
