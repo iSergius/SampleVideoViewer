@@ -17,6 +17,8 @@ import name.isergius.android.task.hazpro.samplevideochat.core.SignalingChannelSe
  */
 public class EnterActivity extends AppCompatActivity {
 
+    public static final String PROPERTY_ROOM_NAME = "roomName";
+
     private RoomNameEdit roomNameEdit;
     private OpenRoomButton openRoomButton;
 
@@ -58,8 +60,8 @@ public class EnterActivity extends AppCompatActivity {
         @Override
         public void onClick(View v) {
             if (roomNameEdit.isValid()) {
-                Intent intent = new Intent(context, ListClientsActivity.class);
-                intent.putExtra(SignalingChannelService.PROPERTY_ROOM_NAME, roomNameEdit.getValue());
+                Intent intent = new Intent(context, PeerListActivity.class);
+                intent.putExtra(PROPERTY_ROOM_NAME, roomNameEdit.getValue());
                 startActivity(intent);
             }
         }
