@@ -42,6 +42,7 @@ public class PeerVideoActivity extends AppCompatActivity {
         this.videoView = new VideoView();
         if (getIntent().hasExtra(PeerListActivity.PROPERTY_CLIENT_ID)) {
             clientId = getIntent().getExtras().getString(PeerListActivity.PROPERTY_CLIENT_ID);
+            this.setTitle(clientId);
         }
         bindService();
     }
