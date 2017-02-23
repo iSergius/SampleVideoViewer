@@ -24,19 +24,19 @@ public class MemoryStoreTest {
 
     @Test
     public void read() throws Exception {
-        Client actualClient = memoryClientStore.read(expectedClientId);
+        Client actualClient = memoryClientStore.readClient(expectedClientId);
         Assert.assertEquals(expectedClient, actualClient);
     }
 
     @Test(expected = StoreException.class)
     public void readNotContain() throws Exception {
         String clientId = "dca3ba16-9853-4c5e-ad04-c553f816f4b9";
-        memoryClientStore.read(clientId);
+        memoryClientStore.readClient(clientId);
     }
 
     @Test
     public void readAll() throws Exception {
-        List<Client> allClients = memoryClientStore.readAll();
+        List<Client> allClients = memoryClientStore.readAllClients();
         Assert.assertEquals(Arrays.asList(expectedClient), allClients);
     }
 
@@ -55,15 +55,15 @@ public class MemoryStoreTest {
                 "6a5c7759-0c7b-4ccd-a076-8a4155e58ee3",
                 null,
                 "Anonymous dca3ba16-9853-4c5e-ad04-c553f816f4b9");
-        memoryClientStore.save(expectedClient);
-        Client actualClient = memoryClientStore.read(clientId);
+        memoryClientStore.saveClient(expectedClient);
+        Client actualClient = memoryClientStore.readClient(clientId);
         Assert.assertEquals(expectedClient, actualClient);
     }
 
     @Test
     public void delete() throws Exception {
-        memoryClientStore.delete(expectedClientId);
-        Assert.assertTrue(memoryClientStore.readAll().isEmpty());
+        memoryClientStore.deleteClient(expectedClientId);
+        Assert.assertTrue(memoryClientStore.readAllClients().isEmpty());
     }
 
     @Test

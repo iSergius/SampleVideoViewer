@@ -14,13 +14,13 @@ import name.isergius.android.task.hazpro.samplevideochat.data.RoomConfig;
 
 public interface Store {
 
-    Client read(String clientId) throws StoreException;
+    Client readClient(String clientId) throws StoreException;
 
-    void save(Client expectedClient) throws StoreException;
+    void saveClient(Client expectedClient) throws StoreException;
 
-    void delete(String clientId) throws StoreException;
+    void deleteClient(String clientId) throws StoreException;
 
-    List<Client> readAll();
+    List<Client> readAllClients();
 
     List<Client> readAllReadyClients();
 

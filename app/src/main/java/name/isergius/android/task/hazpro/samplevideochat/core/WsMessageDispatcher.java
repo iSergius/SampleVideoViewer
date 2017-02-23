@@ -52,7 +52,7 @@ public class WsMessageDispatcher implements MessageConsumer {
     @Override
     public void clientData(Client client) {
         try {
-            store.save(client);
+            store.saveClient(client);
         } catch (StoreException e) {
             Log.e(TAG, "Error", e);
         }
@@ -61,7 +61,7 @@ public class WsMessageDispatcher implements MessageConsumer {
     @Override
     public void clientLogout(String clientId) {
         try {
-            store.delete(clientId);
+            store.deleteClient(clientId);
             PeerListener listener = peerListeners.get(clientId);
             if (listener != null) {
                 listener.disconnect();
@@ -82,7 +82,7 @@ public class WsMessageDispatcher implements MessageConsumer {
     public void clientServer(String clientId, Set<Server> servers) {
         synchronized (store) {
             try {
-                Client client = store.read(clientId);
+                Client client = store.readClient(clientId);
                 for (Server server : servers) {
                     client.add(server);
                 }

@@ -37,16 +37,16 @@ public class MemoryStore implements Store {
     }
 
     @Override
-    public synchronized Client read(String clientId) throws StoreException {
-        Log.v(TAG, "read: "+clientId);
+    public synchronized Client readClient(String clientId) throws StoreException {
+        Log.v(TAG, "readClient: "+clientId);
         Client client = clients.get(clientId);
         isNonNull(client);
         return client;
     }
 
     @Override
-    public synchronized List<Client> readAll() {
-        Log.v(TAG, "readAll "+clients);
+    public synchronized List<Client> readAllClients() {
+        Log.v(TAG, "readAllClients "+clients);
         return new ArrayList<>(clients.values());
     }
 
@@ -63,8 +63,8 @@ public class MemoryStore implements Store {
     }
 
     @Override
-    public synchronized void save(Client client) throws StoreException {
-        Log.v(TAG, "save "+client);
+    public synchronized void saveClient(Client client) throws StoreException {
+        Log.v(TAG, "saveClient "+client);
         try {
             clients.put(client.getId(), client);
         } catch (Exception e) {
@@ -73,8 +73,8 @@ public class MemoryStore implements Store {
     }
 
     @Override
-    public synchronized void delete(String clientId) throws StoreException {
-        Log.v(TAG, "delete "+clientId);
+    public synchronized void deleteClient(String clientId) throws StoreException {
+        Log.v(TAG, "deleteClient "+clientId);
         Client client = clients.remove(clientId);
         isNonNull(client);
     }

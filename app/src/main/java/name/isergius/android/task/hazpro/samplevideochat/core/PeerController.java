@@ -34,7 +34,7 @@ public class PeerController implements PeerListener, SdpObserver, PeerConnection
 
     public PeerController(String clientId, Store store, PeerConnectionFactory peerConnectionFactory, PeerMessageProducer peerMessageProducer) throws StoreException {
         this.store = store;
-        this.client = this.store.read(clientId);
+        this.client = this.store.readClient(clientId);
         this.peerConnectionFactory = peerConnectionFactory;
         this.peerMessageProducer = peerMessageProducer;
         this.peerConnection = peerConnectionFactory.createPeerConnection(client.getIceServers(), mediaConstraints, this);

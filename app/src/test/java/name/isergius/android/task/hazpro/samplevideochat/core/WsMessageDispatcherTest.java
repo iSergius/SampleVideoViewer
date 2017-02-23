@@ -51,7 +51,7 @@ public class WsMessageDispatcherTest {
     public void clientData() throws Exception {
         Client client = new Client("1", null, null, null);
         wsMessageDispatcher.clientData(client);
-        Mockito.verify(store).save(client);
+        Mockito.verify(store).saveClient(client);
     }
 
     @Test
@@ -70,11 +70,11 @@ public class WsMessageDispatcherTest {
 
     @Test
     public void clientServer() throws Exception {
-        Mockito.when(store.read(clientId)).thenReturn(new Client("1", null, null, null));
+        Mockito.when(store.readClient(clientId)).thenReturn(new Client("1", null, null, null));
         Set<Server> expectedServer = new HashSet<>(Arrays.asList(new Server("j/1YtwTvE6yqlb4l/sbYWW1oA64=", "appearin:1487381191", "turn:turn.appear.in:443?transport=udp")));
 
         wsMessageDispatcher.clientServer(clientId, expectedServer);
-        Mockito.verify(store).read(clientId);
+        Mockito.verify(store).readClient(clientId);
         Mockito.verify(storeListener).updateClients(ArgumentMatchers.any(List.class));
     }
 
