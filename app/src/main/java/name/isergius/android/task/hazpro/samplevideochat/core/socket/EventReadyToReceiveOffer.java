@@ -6,6 +6,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
 import io.socket.emitter.Emitter;
 import name.isergius.android.task.hazpro.samplevideochat.core.MessageConsumer;
 import name.isergius.android.task.hazpro.samplevideochat.data.Server;
@@ -34,9 +38,11 @@ public class EventReadyToReceiveOffer implements Emitter.Listener {
             JSONArray iceServers = object
                     .getJSONObject("iceServers")
                     .getJSONArray("iceServers");
+            Set<Server> servers = new HashSet<>();
             for (int i = 0; i < iceServers.length(); i++) {
-                messageConsumer.clientServer(clientId, convertToServer(iceServers.getJSONObject(i)));
+                servers.add(convertToServer(iceServers.getJSONObject(i)));
             }
+            messageConsumer.clientServer(clientId, servers);
         } catch (JSONException e) {
             Log.e(TAG, "Error", e);
         }

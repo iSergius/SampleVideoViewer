@@ -7,6 +7,11 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
+
 import name.isergius.android.task.hazpro.samplevideochat.data.CandidateServer;
 import name.isergius.android.task.hazpro.samplevideochat.data.Client;
 import name.isergius.android.task.hazpro.samplevideochat.data.RoomConfig;
@@ -65,7 +70,8 @@ public class WsMessageDispatcherTest {
     @Test
     public void clientServer() throws Exception {
         Mockito.when(clientStore.read(clientId)).thenReturn(new Client("1", null, null, null));
-        Server expectedServer = new Server("j/1YtwTvE6yqlb4l/sbYWW1oA64=", "appearin:1487381191", "turn:turn.appear.in:443?transport=udp");
+        Set<Server> expectedServer = new HashSet<>(Arrays.asList(new Server("j/1YtwTvE6yqlb4l/sbYWW1oA64=", "appearin:1487381191", "turn:turn.appear.in:443?transport=udp")));
+
         wsMessageDispatcher.clientServer(clientId, expectedServer);
         Mockito.verify(clientStore).read(clientId);
         Mockito.verify(storeListener).changeState();

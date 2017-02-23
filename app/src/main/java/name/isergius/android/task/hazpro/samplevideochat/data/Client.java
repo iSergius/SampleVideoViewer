@@ -7,8 +7,10 @@ import org.webrtc.SessionDescription;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 /**
  * @author Sergey Kondratyev
@@ -22,7 +24,7 @@ public class Client implements Serializable {
     private String deviceId;
     private String userId;
     private String name;
-    private List<Server> servers = new LinkedList<>();
+    private Set<Server> servers = new HashSet<>();
     private List<CandidateServer> candidateServers = new LinkedList<>();
     private boolean ready;
 
@@ -87,7 +89,7 @@ public class Client implements Serializable {
         return name;
     }
 
-    public List<Server> getServers() {
+    public Set<Server> getServers() {
         return servers;
     }
 

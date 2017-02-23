@@ -8,6 +8,10 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 import name.isergius.android.task.hazpro.samplevideochat.core.MessageConsumer;
 import name.isergius.android.task.hazpro.samplevideochat.data.Server;
 
@@ -35,7 +39,11 @@ public class EventReadyToReceiveOfferTest {
     public void call() throws Exception {
         String clientId = "6236007a-6651-453b-8701-fe127541e048";
         eventReadyToReceiveOffer.call(arg);
-        Mockito.verify(messageConsumer).clientServer(clientId, new Server("j/1YtwTvE6yqlb4l/sbYWW1oA64=", "appearin:1487381191", "turn:turn.appear.in:443?transport=udp"));
+        Set<Server> expectedServers = new HashSet<>(Arrays.asList(
+                new Server("j/1YtwTvE6yqlb4l/sbYWW1oA64=", "appearin:1487381191", "turn:turn.appear.in:443?transport=udp"),
+                new Server("j/1YtwTvE6yqlb4l/sbYWW1oA64=", "appearin:1487381191", "turn:turn.appear.in:443?transport=tcp"),
+                new Server("j/1YtwTvE6yqlb4l/sbYWW1oA64=", "appearin:1487381191", "turns:turn.appear.in:443?transport=tcp")));
+        Mockito.verify(messageConsumer).clientServer(clientId, expectedServers);
     }
 
 }

@@ -4,6 +4,7 @@ import android.util.Log;
 
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -76,11 +77,13 @@ public class WsMessageDispatcher implements MessageConsumer {
     }
 
     @Override
-    public void clientServer(String clientId, Server server) {
+    public void clientServer(String clientId, Set<Server> servers) {
         synchronized (clientStore) {
             try {
                 Client client = clientStore.read(clientId);
-                client.add(server);
+                for (Server server: servers) {
+                    client.add(server);
+                }
                 notifyStoreListeners();
             } catch (StoreException e) {
                 Log.e(TAG,"Error",e);
