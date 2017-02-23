@@ -6,6 +6,7 @@ import org.junit.Test;
 import java.util.Arrays;
 import java.util.List;
 
+import name.isergius.android.task.hazpro.samplevideochat.data.ChannelConfig;
 import name.isergius.android.task.hazpro.samplevideochat.data.Client;
 import name.isergius.android.task.hazpro.samplevideochat.data.RoomConfig;
 
@@ -41,6 +42,7 @@ public class MemoryClientStoreTest {
 
     @Test
     public void readAllReadyClients() throws Exception {
+        memoryClientStore.saveSelf(new Client("1",null,null,null));
         List<Client> allClients = memoryClientStore.readAllReadyClients();
         System.out.println(allClients);
         Assert.assertTrue(allClients.isEmpty());
@@ -78,5 +80,13 @@ public class MemoryClientStoreTest {
         memoryClientStore.saveRoomConfig(expectedRoomConfig);
         RoomConfig actualRoomConfig = memoryClientStore.readRoomConfig();
         Assert.assertEquals(expectedRoomConfig, actualRoomConfig);
+    }
+
+    @Test
+    public void saveChannelConfig() throws Exception {
+        ChannelConfig expectedChannelConfig = new ChannelConfig();
+        memoryClientStore.saveChannelConfig(expectedChannelConfig);
+        ChannelConfig actualChannelConfig = memoryClientStore.readChannelConfig();
+        Assert.assertEquals(expectedChannelConfig, actualChannelConfig);
     }
 }

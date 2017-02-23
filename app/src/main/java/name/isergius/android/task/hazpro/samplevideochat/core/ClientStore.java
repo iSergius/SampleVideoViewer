@@ -2,11 +2,9 @@ package name.isergius.android.task.hazpro.samplevideochat.core;
 
 import java.util.List;
 
-import name.isergius.android.task.hazpro.samplevideochat.data.CandidateServer;
+import name.isergius.android.task.hazpro.samplevideochat.data.ChannelConfig;
 import name.isergius.android.task.hazpro.samplevideochat.data.Client;
 import name.isergius.android.task.hazpro.samplevideochat.data.RoomConfig;
-import name.isergius.android.task.hazpro.samplevideochat.data.SDescription;
-import name.isergius.android.task.hazpro.samplevideochat.data.Server;
 
 /**
  * @author Sergey Kondratyev
@@ -33,4 +31,8 @@ public interface ClientStore {
     RoomConfig readRoomConfig() throws StoreException;
 
     void saveRoomConfig(RoomConfig roomConfig) throws StoreException;
+
+    ChannelConfig readChannelConfig() throws StoreException;
+
+    void saveChannelConfig(ChannelConfig channelConfig) throws StoreException;
 }
