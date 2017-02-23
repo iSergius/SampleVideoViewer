@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Sample Video Viewer</string>
 
-    <string name="title_activity_enter">Enter Activity</string>
-    <string name="title_activity_list_clients">Enter Activity</string>
+    <string name="title_activity_enter">Choose room</string>
+    <string name="title_activity_list_clients">Clients in room</string>
     <string name="open_room_btn">Open room</string>
 </resources>
