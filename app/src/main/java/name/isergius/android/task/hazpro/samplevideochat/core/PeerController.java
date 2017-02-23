@@ -29,6 +29,7 @@ public class PeerController implements PeerListener, SdpObserver, PeerConnection
     private VideoWindow videoWindow;
     private PeerConnection peerConnection;
     private MediaConstraints mediaConstraints = new MediaConstraints();
+    private MediaStream mediaStream;
 
 
     public PeerController(String clientId, ClientStore clientStore, PeerConnectionFactory peerConnectionFactory, PeerMessageProducer peerMessageProducer) throws StoreException {
@@ -43,6 +44,9 @@ public class PeerController implements PeerListener, SdpObserver, PeerConnection
     public void setView(VideoWindow videoWindow) {
         Log.v(TAG, "setView " + videoWindow);
         this.videoWindow = videoWindow;
+        if (mediaStream != null) {
+            videoWindow.show(mediaStream.videoTracks.getFirst());
+        }
     }
 
     @Override
@@ -123,6 +127,7 @@ public class PeerController implements PeerListener, SdpObserver, PeerConnection
     @Override
     public void onAddStream(MediaStream mediaStream) {
         Log.v(TAG, "onAddStream " + mediaStream);
+        this.mediaStream = mediaStream;
         videoWindow.show(mediaStream.videoTracks.getFirst());
     }
 
