@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:id="@+id/clients_list_root"
-    tools:context=".ui.ListClientsActivity">
+    tools:context=".ui.PeerListActivity">
 
     <ListView
         android:id="@+id/clients_list"
