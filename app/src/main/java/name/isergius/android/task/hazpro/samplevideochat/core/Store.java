@@ -12,7 +12,7 @@ import name.isergius.android.task.hazpro.samplevideochat.data.RoomConfig;
  * Implementations must thred-safe
  */
 
-public interface ClientStore {
+public interface Store {
 
     Client read(String clientId) throws StoreException;
 

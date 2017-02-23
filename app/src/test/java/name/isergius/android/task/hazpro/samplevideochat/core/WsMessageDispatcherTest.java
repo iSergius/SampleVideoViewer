@@ -31,7 +31,7 @@ public class WsMessageDispatcherTest {
     @Mock
     private StoreListener storeListener;
     @Mock
-    private ClientStore clientStore;
+    private Store store;
     @Mock
     private MessageProducer messageProducer;
 
@@ -42,7 +42,7 @@ public class WsMessageDispatcherTest {
     @Before
     public void setUp() throws Exception {
         Mockito.when(peerListener.clientId()).thenReturn(clientId);
-        this.wsMessageDispatcher = new WsMessageDispatcher(clientStore, messageProducer);
+        this.wsMessageDispatcher = new WsMessageDispatcher(store, messageProducer);
         this.wsMessageDispatcher.registerPeerListener(peerListener);
         this.wsMessageDispatcher.registerStoreListener(storeListener);
     }
@@ -51,7 +51,7 @@ public class WsMessageDispatcherTest {
     public void clientData() throws Exception {
         Client client = new Client("1", null, null, null);
         wsMessageDispatcher.clientData(client);
-        Mockito.verify(clientStore).save(client);
+        Mockito.verify(store).save(client);
     }
 
     @Test
@@ -70,11 +70,11 @@ public class WsMessageDispatcherTest {
 
     @Test
     public void clientServer() throws Exception {
-        Mockito.when(clientStore.read(clientId)).thenReturn(new Client("1", null, null, null));
+        Mockito.when(store.read(clientId)).thenReturn(new Client("1", null, null, null));
         Set<Server> expectedServer = new HashSet<>(Arrays.asList(new Server("j/1YtwTvE6yqlb4l/sbYWW1oA64=", "appearin:1487381191", "turn:turn.appear.in:443?transport=udp")));
 
         wsMessageDispatcher.clientServer(clientId, expectedServer);
-        Mockito.verify(clientStore).read(clientId);
+        Mockito.verify(store).read(clientId);
         Mockito.verify(storeListener).updateClients(ArgumentMatchers.any(List.class));
     }
 
@@ -82,7 +82,7 @@ public class WsMessageDispatcherTest {
     public void selfData() throws Exception {
         Client client = new Client("id", null, null, null);
         wsMessageDispatcher.selfData(client);
-        Mockito.verify(clientStore).saveSelf(client);
+        Mockito.verify(store).saveSelf(client);
     }
 
     @Test
@@ -96,9 +96,9 @@ public class WsMessageDispatcherTest {
     @Test
     public void selfConnected() throws Exception {
         RoomConfig expectedRoomConfig = new RoomConfig("t", true, true);
-        Mockito.when(clientStore.readRoomConfig()).thenReturn(expectedRoomConfig);
+        Mockito.when(store.readRoomConfig()).thenReturn(expectedRoomConfig);
         wsMessageDispatcher.selfConnected();
-        Mockito.verify(clientStore).readRoomConfig();
+        Mockito.verify(store).readRoomConfig();
         Mockito.verify(messageProducer).sendJoinRoom(expectedRoomConfig);
     }
 

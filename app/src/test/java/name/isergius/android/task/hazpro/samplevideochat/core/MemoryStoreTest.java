@@ -13,14 +13,14 @@ import name.isergius.android.task.hazpro.samplevideochat.data.RoomConfig;
 /**
  * @author Sergey Kondratyev
  */
-public class MemoryClientStoreTest {
+public class MemoryStoreTest {
 
     private String expectedClientId = "6236007a-6651-453b-8701-fe127541e048";
     private String expectedDeviceId = "3f0c1829-31c8-4d5c-a01a-34b75043b393";
     private String expectedUserId = null;
     private String expectedName = "Anonymous 6236007a-6651-453b-8701-fe127541e048";
     private Client expectedClient = new Client(expectedClientId, expectedDeviceId, expectedUserId, expectedName);
-    private MemoryClientStore memoryClientStore = new MemoryClientStore(Arrays.asList(expectedClient));
+    private MemoryStore memoryClientStore = new MemoryStore(Arrays.asList(expectedClient));
 
     @Test
     public void read() throws Exception {

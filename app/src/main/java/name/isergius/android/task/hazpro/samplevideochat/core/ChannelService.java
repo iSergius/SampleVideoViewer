@@ -38,7 +38,7 @@ public class ChannelService extends Service {
 
     private static final String TAG = PeerVideoActivity.class.getSimpleName();
 
-    private final ClientStore clientStore;
+    private final Store store;
     private final Facade facade;
     private Socket socket;
     private WsMessageProducer messageProducer;
@@ -46,7 +46,7 @@ public class ChannelService extends Service {
     private Map<String, PeerController> peerControllers = new HashMap<>();
 
     public ChannelService() {
-        this.clientStore = new MemoryClientStore();
+        this.store = new MemoryStore();
         facade = new Facade();
     }
 
@@ -70,11 +70,11 @@ public class ChannelService extends Service {
 
     private void initSocket() {
         try {
-            ChannelConfig channelConfig = clientStore.readChannelConfig();
+            ChannelConfig channelConfig = store.readChannelConfig();
             IO.Options options = prepare(channelConfig);
             socket = IO.socket(channelConfig.getUri(), options);
             messageProducer = new WsMessageProducer(socket);
-            messageConsumer = new WsMessageDispatcher(clientStore, messageProducer);
+            messageConsumer = new WsMessageDispatcher(store, messageProducer);
             socket
                     .on(Socket.EVENT_CONNECT, new EventConnect(messageConsumer))
                     .on(EventRoomJoined.EVENT_ID, new EventRoomJoined(messageConsumer))
@@ -124,7 +124,7 @@ public class ChannelService extends Service {
             }
             App app = (App) getApplication();
             try {
-                PeerController peerController = new PeerController(clientId, clientStore, app.getPeerConnectionFactory(), messageProducer);
+                PeerController peerController = new PeerController(clientId, store, app.getPeerConnectionFactory(), messageProducer);
                 peerControllers.put(clientId,peerController);
                 messageConsumer.registerPeerListener(peerController);
                 return peerController;
@@ -139,7 +139,7 @@ public class ChannelService extends Service {
 
         public void connect(RoomConfig roomConfig) {
             try {
-                clientStore.saveRoomConfig(roomConfig);
+                store.saveRoomConfig(roomConfig);
                 initSocket();
             } catch (StoreException e) {
                 Log.e(TAG, "Error", e);

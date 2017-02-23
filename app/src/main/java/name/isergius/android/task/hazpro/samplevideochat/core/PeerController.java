@@ -22,7 +22,7 @@ import name.isergius.android.task.hazpro.samplevideochat.data.SDescription;
 public class PeerController implements PeerListener, SdpObserver, PeerConnection.Observer {
 
     private static final String TAG = PeerController.class.getSimpleName();
-    private final ClientStore clientStore;
+    private final Store store;
     private final PeerConnectionFactory peerConnectionFactory;
     private final PeerMessageProducer peerMessageProducer;
     private Client client;
@@ -32,13 +32,13 @@ public class PeerController implements PeerListener, SdpObserver, PeerConnection
     private MediaStream mediaStream;
 
 
-    public PeerController(String clientId, ClientStore clientStore, PeerConnectionFactory peerConnectionFactory, PeerMessageProducer peerMessageProducer) throws StoreException {
-        this.clientStore = clientStore;
-        this.client = this.clientStore.read(clientId);
+    public PeerController(String clientId, Store store, PeerConnectionFactory peerConnectionFactory, PeerMessageProducer peerMessageProducer) throws StoreException {
+        this.store = store;
+        this.client = this.store.read(clientId);
         this.peerConnectionFactory = peerConnectionFactory;
         this.peerMessageProducer = peerMessageProducer;
         this.peerConnection = peerConnectionFactory.createPeerConnection(client.getIceServers(), mediaConstraints, this);
-        peerMessageProducer.sendReadyToReceiveOffer(clientId(), clientStore.readSelf().getServers());
+        peerMessageProducer.sendReadyToReceiveOffer(clientId(), store.readSelf().getServers());
     }
 
     public void setView(VideoWindow videoWindow) {

@@ -3,18 +3,13 @@ package name.isergius.android.task.hazpro.samplevideochat.core;
 import android.util.Log;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import name.isergius.android.task.hazpro.samplevideochat.data.CandidateServer;
 import name.isergius.android.task.hazpro.samplevideochat.data.ChannelConfig;
 import name.isergius.android.task.hazpro.samplevideochat.data.Client;
 import name.isergius.android.task.hazpro.samplevideochat.data.RoomConfig;
-import name.isergius.android.task.hazpro.samplevideochat.data.SDescription;
-import name.isergius.android.task.hazpro.samplevideochat.data.Server;
 
 /**
  * @author Sergey Kondratyev
@@ -22,20 +17,20 @@ import name.isergius.android.task.hazpro.samplevideochat.data.Server;
  * thread-safe
  */
 
-public class MemoryClientStore implements ClientStore {
+public class MemoryStore implements Store {
 
-    private static final String TAG = MemoryClientStore.class.getSimpleName();
+    private static final String TAG = MemoryStore.class.getSimpleName();
 
     private Map<String, Client> clients = new ConcurrentHashMap<>();
     private Client self;
     private RoomConfig roomConfig;
     private ChannelConfig channelConfig = new ChannelConfig();
 
-    MemoryClientStore() {
+    MemoryStore() {
         Log.v(TAG, "Constructor");
     }
 
-    public MemoryClientStore(List<Client> clients) {
+    public MemoryStore(List<Client> clients) {
         for (Client client : clients) {
             this.clients.put(client.getId(), client);
         }

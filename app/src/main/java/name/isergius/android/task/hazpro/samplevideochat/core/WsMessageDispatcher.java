@@ -19,13 +19,13 @@ import name.isergius.android.task.hazpro.samplevideochat.data.Server;
 public class WsMessageDispatcher implements MessageConsumer {
 
     private static final String TAG = WsMessageDispatcher.class.getSimpleName();
-    private final ClientStore clientStore;
+    private final Store store;
     private final MessageProducer messageProducer;
     private Map<String, PeerListener> peerListeners = new HashMap<>();
     private Set<StoreListener> storeListeners = new HashSet<>();
 
-    public WsMessageDispatcher(ClientStore clientStore, MessageProducer messageProducer) {
-        this.clientStore = clientStore;
+    public WsMessageDispatcher(Store store, MessageProducer messageProducer) {
+        this.store = store;
         this.messageProducer = messageProducer;
     }
 
@@ -52,7 +52,7 @@ public class WsMessageDispatcher implements MessageConsumer {
     @Override
     public void clientData(Client client) {
         try {
-            clientStore.save(client);
+            store.save(client);
         } catch (StoreException e) {
             Log.e(TAG, "Error", e);
         }
@@ -61,7 +61,7 @@ public class WsMessageDispatcher implements MessageConsumer {
     @Override
     public void clientLogout(String clientId) {
         try {
-            clientStore.delete(clientId);
+            store.delete(clientId);
             PeerListener listener = peerListeners.get(clientId);
             if (listener != null) {
                 listener.disconnect();
@@ -80,9 +80,9 @@ public class WsMessageDispatcher implements MessageConsumer {
 
     @Override
     public void clientServer(String clientId, Set<Server> servers) {
-        synchronized (clientStore) {
+        synchronized (store) {
             try {
-                Client client = clientStore.read(clientId);
+                Client client = store.read(clientId);
                 for (Server server : servers) {
                     client.add(server);
                 }
@@ -96,7 +96,7 @@ public class WsMessageDispatcher implements MessageConsumer {
     @Override
     public void selfData(Client client) {
         try {
-            clientStore.saveSelf(client);
+            store.saveSelf(client);
         } catch (StoreException e) {
             Log.e(TAG, "Error", e);
         }
@@ -111,7 +111,7 @@ public class WsMessageDispatcher implements MessageConsumer {
     @Override
     public void selfConnected() {
         try {
-            messageProducer.sendJoinRoom(clientStore.readRoomConfig());
+            messageProducer.sendJoinRoom(store.readRoomConfig());
         } catch (StoreException e) {
             Log.e(TAG, "Error", e);
         }
@@ -119,7 +119,7 @@ public class WsMessageDispatcher implements MessageConsumer {
 
     private void notifyStoreListeners() {
         for (StoreListener listener : storeListeners) {
-            listener.updateClients(clientStore.readAllReadyClients());
+            listener.updateClients(store.readAllReadyClients());
         }
     }
 }
