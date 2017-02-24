@@ -10,7 +10,6 @@ import android.support.v7.widget.AppCompatEditText;
 import android.view.View;
 
 import name.isergius.android.task.hazpro.samplevideochat.R;
-import name.isergius.android.task.hazpro.samplevideochat.core.SignalingChannelService;
 
 /**
  * @author Sergey Kondratyev
