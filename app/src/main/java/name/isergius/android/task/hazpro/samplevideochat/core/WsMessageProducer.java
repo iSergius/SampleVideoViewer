@@ -42,6 +42,7 @@ public class WsMessageProducer implements MessageProducer, PeerMessageProducer {
             Log.e(TAG, "Error", e);
         }
         socket.emit(MESSAGE_ID, object);
+        Log.v(TAG,MESSAGE_ID+" "+object);
     }
 
     @Override
@@ -58,6 +59,7 @@ public class WsMessageProducer implements MessageProducer, PeerMessageProducer {
             Log.e(TAG, "Error", e);
         }
         socket.emit(MESSAGE_ID, object);
+        Log.v(TAG,MESSAGE_ID+" "+object);
     }
 
     @Override
@@ -81,18 +83,23 @@ public class WsMessageProducer implements MessageProducer, PeerMessageProducer {
             Log.e(TAG, "Error", e);
         }
         socket.emit(MESSAGE_ID, object);
+        Log.v(TAG,MESSAGE_ID+" "+object);
     }
 
     @Override
     public void sendSdpAnswer(String receiverId, SessionDescription sessionDescription) {
         String MESSAGE_ID = "sdp_answer";
-        socket.emit(MESSAGE_ID, prepareSdpMessage(receiverId, sessionDescription));
+        JSONObject object = prepareSdpMessage(receiverId, sessionDescription);
+        socket.emit(MESSAGE_ID, object);
+        Log.v(TAG,MESSAGE_ID+" "+object);
     }
 
     @Override
     public void sendSdpOffer(String receiverId, SessionDescription sessionDescription) {
         String MESSAGE_ID = "sdp_offer";
-        socket.emit(MESSAGE_ID, prepareSdpMessage(receiverId, sessionDescription));
+        JSONObject object = prepareSdpMessage(receiverId, sessionDescription);
+        socket.emit(MESSAGE_ID, object);
+        Log.v(TAG,MESSAGE_ID+" "+object);
     }
 
     private JSONObject prepareSdpMessage(String receiverId, SessionDescription sessionDescription) {
